@@ -1,4 +1,3 @@
-from unicodedata import name
 from flask import Blueprint, jsonify
 
 # 1. Create a virtual environment and activate it
@@ -13,12 +12,12 @@ class Planet:
         self.description = description
         self.color = color
 
-Earth = Planet(1,"Earth","description","Blue and Green")
-Mercury = Planet(2, "Mercury", "description", "color")
-Neptune = Planet(3, "Neptune", "description", "color")
-Jupiter = Planet(4, "Jupiter", "description", "color")
+earth = Planet(1,"Earth","home planet","blue, brown, green, and white")
+mercury = Planet(2, "Mercury", "closest planet to the sun", "grey")
+neptune = Planet(3, "Neptune", "eight planet, farthest from sun", "blue")
+jupiter = Planet(4, "Jupiter", "fifth planet from the sun, largest planet", "brown, orange and tan")
 
-planets = [Earth, Mercury, Neptune, Jupiter]
+planets = [earth, mercury, neptune, jupiter]
 
 planets_bp = Blueprint("planets", __name__, url_prefix = "/planets")
 
