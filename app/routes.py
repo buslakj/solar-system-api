@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, abort, make_response
 
 # 1. Create a virtual environment and activate it
 # 1. Install the dependencies
@@ -11,6 +11,13 @@ class Planet:
         self.name = name
         self.description = description
         self.color = color
+    
+    def to_json(self):
+        return {"id": self.id,
+                "name": self.name,
+                "description": self.description,
+                "color": self.color
+                }
 
 earth = Planet(1,"Earth","home planet","blue, brown, green, and white")
 mercury = Planet(2, "Mercury", "closest planet to the sun", "grey")
@@ -25,10 +32,24 @@ planets_bp = Blueprint("planets", __name__, url_prefix = "/planets")
 def get_all_planets():
     planet_response = []
     for planet in planets:
-        planet_response.append({
-            "id":planet.id,
-            "name":planet.name,
-            "description":planet.description,
-            "color": planet.color
-        })
-    return jsonify(planet_response)
+        planet_response.append(planet.to_json())
+
+    return jsonify(planet_response, 200)
+
+def validate_id(planet_id):
+    try:
+        planet_id = int(planet_id)
+    except:
+        return abort(make_response({"message": f"planet {planet_id} is not valid"}, 400))
+    
+    for planet in planets:
+        if planet.id == planet_id:
+            return planet
+    
+    return abort(make_response({"message": f"planet {planet_id} does not exist"}, 404))
+
+# Get single planet
+@planets_bp.route("/<planet_id>", methods = ["GET"])
+def get_one_planet(planet_id):
+    planet = validate_id(planet_id)
+    return jsonify(planet.to_json(), 200)
