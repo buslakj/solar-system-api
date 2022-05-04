@@ -12,3 +12,14 @@ class Planet(db.Model):
                 "description": self.description,
                 "color": self.color
                 }
+    def update_planet(self,request_body):
+        self.name = request_body["name"]
+        self.description =request_body["description"]
+        self.color= request_body["color"]
+    
+    @classmethod
+    def create_planet(cls, request_body):
+        new_planet = cls(name = request_body["name"],
+                        description = request_body["description"], 
+                        color = request_body["color"])
+        return new_planet
