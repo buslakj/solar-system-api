@@ -27,7 +27,7 @@ def client(app):
     
 
 @pytest.fixture
-def two_save_planets(app):
+def two_saved_planets(app):
     earth = Planet(
     name = "Earth",
     description = "Home planet",

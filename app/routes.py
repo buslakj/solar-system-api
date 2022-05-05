@@ -22,7 +22,7 @@ def make_new_planet():
     db.session.add(new_planet)
     db.session.commit()
 
-    return make_response(f"planet {new_planet.id} successfully created", 201)
+    return make_response(jsonify(f"planet {new_planet.id} successfully created"), 201)
 
 @planets_bp.route("/<planet_id>", methods = ["GET"])
 def get_one_planet(planet_id):
