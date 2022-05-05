@@ -27,7 +27,7 @@ def make_new_planet():
 @planets_bp.route("/<planet_id>", methods = ["GET"])
 def get_one_planet(planet_id):
     planet = validate_id(planet_id)
-    return jsonify(planet.to_json(), 200)
+    return jsonify(planet.to_json()), 200
 
 @planets_bp.route("/<planet_id>", methods = ["PUT"])
 def update_one_planet(planet_id):
