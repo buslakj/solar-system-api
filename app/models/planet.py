@@ -5,6 +5,8 @@ class Planet(db.Model):
     name = db.Column(db.String)
     description = db.Column(db.String)
     color = db.Column(db.String)
+    moon = db.relationship("Moon", back_populates = "planet")
+
 
     def to_json(self):
         return {"id": self.id,
@@ -12,6 +14,7 @@ class Planet(db.Model):
                 "description": self.description,
                 "color": self.color
                 }
+
     def update_planet(self,request_body):
         self.name = request_body["name"]
         self.description =request_body["description"]
